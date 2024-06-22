@@ -100,34 +100,23 @@ const Genre = () => {
                 </Box>
             </Modal>
             {data.map((genre, index) => (
-                // <li key={index}>{genre.name}</li>
-                <Box>
+                <Box key={index}>
                     <Card sx={{ display: 'flex', marginTop: "10px" }}>
                         <Box sx={{ display: 'flex', flexDirection: 'column', flex: '1 0 auto' }}>
                             <CardContent>
                                 <Typography component="div" variant="h6">
-                                    Live From Space
-                                </Typography>
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Mac Miller
+                                    {genre.name}
                                 </Typography>
                             </CardContent>
                         </Box>
-                        <CardMedia
-                            component="img"
-                            sx={{ width: 100 }}
-                            image="https://mui.com/static/images/cards/live-from-space.jpg"
-                            alt="Live from space album cover"
-                        />
+                        <Box display={'flex'} alignItems={'center'} mx={2}>
+                            <Typography variant="subtitle1" color="text.secondary" component="div">
+                                Hapus
+                            </Typography>
+                        </Box>
                     </Card>
                 </Box>
             ))}
-            {/*
-            <ul>
-                {data.map((genre, index) => (
-                    <li key={index}>{genre.name}</li>
-                ))}
-            */}
         </div>
     );
 }

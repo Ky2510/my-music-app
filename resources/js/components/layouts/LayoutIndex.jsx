@@ -21,7 +21,15 @@ const LayoutIndex = () => {
         <div>
             <Grid container>
                 <Grid item xs={12} sm={6} md={2}>
-                    <Paper style={{ width: '100%', height: "97vh" }}>
+                    <Paper
+                        style={{
+                            width: '100%',
+                            height: "97vh",
+                            position: 'sticky',
+                            top: '10px',
+                            zIndex: 1000,
+                        }}
+                    >
                         <Box py={2} style={{ display: 'flex', justifyContent: 'center' }}>
                             <Avatar
                                 alt="Remy Sharp"
@@ -32,7 +40,7 @@ const LayoutIndex = () => {
                     </Paper>
                 </Grid>
                 <Grid item xs={12} sm={6} md={10}>
-                    <Paper style={{ height: "10vh" }}>
+                    <Paper style={{ height: "10vh", position: 'sticky', top: 0, zIndex: 1000, marginLeft: 15 }} >
                         <Grid container>
                             <Grid item xs={12} sm={6} md={6}>
                                 <Box
@@ -44,9 +52,27 @@ const LayoutIndex = () => {
                                     }}
                                     mt={2}
                                 >
-                                    <NavLink to="/">Go To Home</NavLink>
-                                    <NavLink to="/about">Go To About</NavLink>
-                                    <NavLink to="/genre">Go To Genre</NavLink>
+                                    <NavLink to="/" style={{ textDecoration: 'none' }}>
+                                        <Typography variant="h6" color="initial">
+                                            <Box>
+                                                Home
+                                            </Box>
+                                        </Typography>
+                                    </NavLink>
+                                    <NavLink to="/about" style={{ textDecoration: 'none' }}>
+                                        <Typography variant="h6" color="initial">
+                                            <Box>
+                                                About
+                                            </Box>
+                                        </Typography>
+                                    </NavLink>
+                                    <NavLink to="/genre" style={{ textDecoration: 'none' }}>
+                                        <Typography variant="h6" color="initial">
+                                            <Box>
+                                                Genre
+                                            </Box>
+                                        </Typography>
+                                    </NavLink>
                                 </Box>
                             </Grid>
                             <Grid item xs={12} sm={6} md={6}>
@@ -55,10 +81,12 @@ const LayoutIndex = () => {
                                         display: 'flex',
                                         justifyContent: 'flex-end',
                                         paddingRight: 20,
+                                        alignItems: 'center',
+                                        height: '57%'
                                     }}
                                     mt={2}
                                 >
-                                    Hello
+                                    Name User
                                 </Box>
                             </Grid>
                         </Grid>
