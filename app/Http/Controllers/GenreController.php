@@ -11,12 +11,26 @@ class GenreController extends Controller
     public function index()
     {
         $genres = Genre::all();
-        return response()->json($genres);
+        return response()->json([
+            'message' => 'Genre fetching successfully',
+            'genre' => $genres
+        ], 201);
     }
 
     public function create(Request $request)
     {
-        // Logic untuk membuat genre baru
+        $validate = $request->validate([
+            'name' => 'required|string|max:255'
+        ]);
+
+        $genre = Genre::create([
+            'name' => $validate['name']
+        ]);
+
+        return response()->json([
+            'message' => 'Genre created successfully',
+            'genre' => $genre
+        ], 201);
     }
 
     public function find($id)
@@ -25,16 +39,42 @@ class GenreController extends Controller
         if (!$genre) {
             return response()->json(['message' => 'Genre not found'], 404);
         }
-        return response()->json($genre);
+
+        return response()->json([
+            'message' => 'Genre fetching successfully',
+            'genre' => $genre
+        ], 201);
     }
 
     public function update(Request $request, $id)
     {
-        // Logic untuk mengupdate genre dengan ID tertentu
+        $genre = Genre::find($id);
+        if (!$genre) {
+            return response()->json(['message' => 'Genre not found'], 404);
+        }
+
+        $genre->update([
+            'name' => $request->name
+        ]);
+
+        return response()->json([
+            'message' => 'Genre updated successfully',
+            'genre' => $genre
+        ], 201);
     }
 
     public function delete($id)
     {
-        // Logic untuk menghapus genre dengan ID tertentu
+        $genre = Genre::find($id);
+        if (!$genre) {
+            return response()->json(['message' => 'Genre not found'], 404);
+        }
+
+        $genre->delete();
+
+        return response()->json([
+            'message' => 'Genre deleted successfully',
+            'genre' => $genre
+        ], 201);
     }
 }
