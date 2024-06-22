@@ -1,6 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Button, Modal, TextField, Typography } from '@material-ui/core';
+import { Box, Button, Modal, TextField, Typography } from '@mui/material';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 
 const style = {
     position: 'absolute',
@@ -55,8 +59,11 @@ const Genre = () => {
 
     return (
         <div>
-            <h1>Genre </h1>
-            <Button variant="contained" onClick={handleOpen}>Add Genre</Button>
+            <Button variant="contained" size='small' color='primary' onClick={handleOpen}>
+                <Box style={{ display: "flex", flexDirection: "row", gap: 4, alignItems: "center" }}>
+                    <AddToPhotosIcon /> Add
+                </Box>
+            </Button>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -64,32 +71,63 @@ const Genre = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Form
-                    </Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                            Form
+                        </Typography>
+                    </Box>
                     <Box id="modal-modal-description" sx={{ mt: 2 }}>
                         <TextField
                             id="outlined-basic"
                             label="Name Genre"
                             variant="outlined"
                             size="small"
-                            name='name'
-                            placeholder='here...'
+                            name="name"
+                            placeholder="here..."
                             fullWidth
                             value={newGenre}
                             onChange={handleInputGenre}
                         />
                     </Box>
-                    <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
-                        <Button variant="contained" color="primary" onClick={handleSubmitGenre}>Submit</Button>
+                    <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+                        <Button onClick={handleClose} variant="contained" size='small' color="secondary">
+                            Close
+                        </Button>
+                        <Button variant="contained" size='small' color="primary" onClick={handleSubmitGenre}>
+                            Submit
+                        </Button>
                     </Box>
                 </Box>
             </Modal>
+            {data.map((genre, index) => (
+                // <li key={index}>{genre.name}</li>
+                <Box>
+                    <Card sx={{ display: 'flex', marginTop: "10px" }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', flex: '1 0 auto' }}>
+                            <CardContent>
+                                <Typography component="div" variant="h6">
+                                    Live From Space
+                                </Typography>
+                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                    Mac Miller
+                                </Typography>
+                            </CardContent>
+                        </Box>
+                        <CardMedia
+                            component="img"
+                            sx={{ width: 100 }}
+                            image="https://mui.com/static/images/cards/live-from-space.jpg"
+                            alt="Live from space album cover"
+                        />
+                    </Card>
+                </Box>
+            ))}
+            {/*
             <ul>
                 {data.map((genre, index) => (
                     <li key={index}>{genre.name}</li>
                 ))}
-            </ul>
+            */}
         </div>
     );
 }

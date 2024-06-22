@@ -12,7 +12,7 @@
         @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.jsx'])
     </head>
-    <body>
+    <body style="background-color: #E7F0DC">
         @yield('content')
         <div id="app"></div>
     </body>
