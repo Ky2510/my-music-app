@@ -10,10 +10,28 @@ class MusicController extends Controller
 {
     public function index()
     {
-        $musics = Music::all();
+        $musics = Music::with(['genre', 'album'])->get();
+        $response = $musics->map(function ($music){
+            return [
+                'genreId' => [
+                    'name' => $music->genre->name ?? 'Unknown Genre'
+                ],
+                'albumId' => [
+                    'name' => $music->album->name ?? 'Unknown Album',
+                    'release' => $music->album->release ?? null,
+                    'image' => $music->album->image ?? null,
+                ],
+                'title' => $music->title,
+                'release' => $music->release,
+                'linkUrl' => $music->linkUrl,
+                'created_at' => $music->created_at,
+                'updated_at' => $music->updated_at,
+            ];
+        });
+
         return response()->json([
             'message' => 'Music fetching successfully',
-            'music' => $musics
+            'music' => $response
         ], 201);
     }
 
