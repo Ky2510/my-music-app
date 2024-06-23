@@ -13,5 +13,5 @@ Route::prefix('genre')->controller(GenreController::class)->group(function () {
     Route::post('/create', 'create')->name('genre.create');
     Route::get('/find/{id}', 'find')->name('genre.find');
     Route::post('/update/{id}', 'update')->name('genre.update');
-    Route::get('/delete/{id}', 'delete')->name('genre.delete');
+    Route::delete('/delete/{id}', 'delete')->name('genre.delete');
 });

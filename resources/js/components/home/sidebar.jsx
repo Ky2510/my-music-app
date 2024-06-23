@@ -1,70 +1,30 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+import React from 'react'
+import { Avatar, Box } from '@material-ui/core'
+import Paper from '@material-ui/core/Paper'
 
-export default function SwipeableTemporaryDrawer() {
-    const [state, setState] = React.useState({
-        left: false,
-    });
-
-    const toggleDrawer = (anchor, open) => (event) => {
-        if (
-            event &&
-            event.type === 'keydown' &&
-            (event.key === 'Tab' || event.key === 'Shift')
-        ) {
-            return;
-        }
-
-        setState({ ...state, [anchor]: open });
-    };
-
-    const list = ({ anchor }) => (
-        <Box
-            sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
-            role="presentation"
-            onClick={toggleDrawer(anchor, false)}
-            onKeyDown={toggleDrawer(anchor, false)}
-        >
-            <List>
-                {['Home', 'Add Playlist'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <InboxIcon />
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-            <Divider />
-        </Box>
-    );
-
+const Sidebar = () => {
     return (
         <div>
-            {['left'].map((anchor) => (
-                <React.Fragment key={anchor}>
-                    <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-                    <SwipeableDrawer
-                        anchor={anchor}
-                        open={state[anchor]}
-                        onClose={toggleDrawer(anchor, false)}
-                        onOpen={toggleDrawer(anchor, true)}
-                    >
-                        {list(anchor)}
-                    </SwipeableDrawer>
-                </React.Fragment>
-            ))}
+
+            <Paper
+                style={{
+                    width: '100%',
+                    height: "97vh",
+                    position: 'sticky',
+                    top: '10px',
+                    zIndex: 1000,
+                }}
+            >
+                <Box py={2} style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Avatar
+                        alt="Remy Sharp"
+                        src="https://mui.com/static/images/avatar/1.jpg"
+                        style={{ width: 84, height: 84 }}
+                    />
+                </Box>
+            </Paper>
         </div>
-    );
+    )
 }
+
+export default Sidebar
