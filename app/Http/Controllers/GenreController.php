@@ -66,15 +66,11 @@ class GenreController extends Controller
     public function delete($id)
     {
         $genre = Genre::find($id);
-        if (!$genre) {
-            return response()->json(['message' => 'Genre not found'], 404);
+        if ($genre) {
+            $genre->delete();
+            return response()->json(['message' => 'Genre deleted successfully.'], 200);
+        } else {
+            return response()->json(['message' => 'Genre not found.'], 404);
         }
-
-        $genre->delete();
-
-        return response()->json([
-            'message' => 'Genre deleted successfully',
-            'genre' => $genre
-        ], 201);
     }
 }
