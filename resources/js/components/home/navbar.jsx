@@ -25,10 +25,10 @@ const Navbar = () => {
                                     </Box>
                                 </Typography>
                             </NavLink>
-                            <NavLink to="/about" style={{ textDecoration: 'none' }}>
+                            <NavLink to="/album" style={{ textDecoration: 'none' }}>
                                 <Typography variant="h6" color="initial">
                                     <Box>
-                                        About
+                                        Album
                                     </Box>
                                 </Typography>
                             </NavLink>

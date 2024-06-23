@@ -11,12 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('albums', function (Blueprint $table) {
+        Schema::create('music', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->unsignedBigInteger('genreId');
+            $table->unsignedBigInteger('albumId');
+            $table->string('title');
             $table->string('release')->nullable();
-            $table->string('image')->nullable();
+            $table->string('linkUrl');
             $table->timestamps();
+
+            $table->foreign('genreId')->references('id')->on('genres');
+            $table->foreign("albumId")->references('id')->on('albums');
         });
     }
 
@@ -25,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('albums');
+        Schema::dropIfExists('music');
     }
 };

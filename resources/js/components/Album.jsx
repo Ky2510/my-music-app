@@ -20,7 +20,7 @@ const style = {
     p: 4,
 };
 
-const Genre = () => {
+const Album = () => {
     // Fetching Data
     const [data, setData] = useState([]);
 
@@ -30,62 +30,70 @@ const Genre = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/genre');
-            setData(response.data.genre);
+            const response = await axios.get('http://127.0.0.1:8000/api/album');
+            setData(response.data.album);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
 
-    // Modal Create Genre
+    // Modal Create 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     // Create Data
-    const [newGenre, setNewGenre] = useState('');
+    const [newAlbum, setNewAlbum] = useState({
+        name: '',
+        release: '',
+        image: ''
+    });
 
-    const handleInputGenre = (event) => {
-        setNewGenre(event.target.value);
+    const handleInputAlbum = (event) => {
+        const { name, value } = event.target;
+        setNewAlbum({
+            ...newAlbum,
+            [name]: value
+        });
     };
 
-    const handleSubmitGenre = async () => {
-        if (!newGenre) {
+    const handleSubmitAlbum = async () => {
+        if (!newAlbum.name) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Genre name cannot be empty!',
+                text: 'Album name cannot be empty!',
             });
             return;
         }
 
         try {
-            await axios.post("http://127.0.0.1:8000/api/genre/create", { name: newGenre });
+            await axios.post("http://127.0.0.1:8000/api/album/create", newAlbum);
             fetchData();
             handleClose();
             Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "success",
-                title: `Genre "${newGenre}" has been created`,
+                title: `Album "${newAlbum.name}" has been created`,
                 showConfirmButton: false,
                 timer: 1500
             });
         } catch (error) {
-            console.error('Error creating genre:', error);
+            console.error('Error creating album:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'There was an error creating the genre.',
+                text: 'There was an error creating the album.',
             });
         }
     };
 
     // Delete Data
-    const handleDeleteGenre = async (id) => {
+    const handleDeleteAlbum = async (id) => {
         try {
             const result = await Swal.fire({
                 title: "Are you sure?",
-                text: `You won't be able to revert this deletion of genre: ${id}!`,
+                text: `You won't be able to revert this deletion of album: ${id}!`,
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -94,16 +102,16 @@ const Genre = () => {
             });
 
             if (result.isConfirmed) {
-                await axios.delete(`http://127.0.0.1:8000/api/genre/delete/${id}`);
+                await axios.delete(`http://127.0.0.1:8000/api/album/delete/${id}`);
                 fetchData();
                 Swal.fire({
                     title: "Deleted!",
-                    text: `Genre ${name} has been deleted.`,
+                    text: `Album ${id} has been deleted.`,
                     icon: "success"
                 });
             }
         } catch (error) {
-            console.error('Error deleting genre:', error);
+            console.error('Error deleting album:', error);
         }
     };
 
@@ -125,23 +133,44 @@ const Genre = () => {
                         <Typography id="modal-modal-title" variant="h6" component="h2">
                             Form
                         </Typography>
-
                     </Box>
                     <Box id="modal-modal-description" sx={{ mt: 2 }}>
-                        <TextField
-                            id="outlined-basic"
-                            label="Name Genre"
-                            variant="outlined"
-                            size="small"
-                            name="name"
-                            placeholder="here..."
-                            fullWidth
-                            value={newGenre}
-                            onChange={handleInputGenre}
-                        />
+                        <Box sx={{ display: "flex", flexDirection: "column", gap: 15 }}>
+                            <TextField
+                                id="outlined-basic"
+                                label="Name Album"
+                                variant="outlined"
+                                size="small"
+                                name="name"
+                                placeholder="here..."
+                                fullWidth
+                                onChange={handleInputAlbum}
+                            />
+                            <TextField
+                                id="outlined-release"
+                                label="Release Date"
+                                variant="outlined"
+                                size="small"
+                                name="release"
+                                type="date"
+                                fullWidth
+                                InputLabelProps={{ shrink: true }}
+                                onChange={handleInputAlbum}
+                            />
+                            <TextField
+                                id="outlined-image"
+                                label="Image URL"
+                                variant="outlined"
+                                size="small"
+                                name="image"
+                                placeholder="here..."
+                                fullWidth
+                                onChange={handleInputAlbum}
+                            />
+                        </Box>
                     </Box>
-                    <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end', gap: 4 }}>
-                        <Button variant="contained" color="primary" onClick={handleSubmitGenre}>
+                    <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+                        <Button variant="contained" color="primary" onClick={handleSubmitAlbum}>
                             Submit
                         </Button>
                         <Button onClick={handleClose} variant="contained" color="secondary">
@@ -151,12 +180,12 @@ const Genre = () => {
                 </Box>
             </Modal>
             <Box mt={2}>
-                {data.map((genre) => (
-                    <Card sx={{ display: 'flex', marginTop: "10px" }} key={genre.id}>
+                {data.map((album) => (
+                    <Card sx={{ display: 'flex', marginTop: "10px" }} key={album.id}>
                         <Box sx={{ display: 'flex', flexDirection: 'row', flex: '1 0 auto' }}>
                             <CardContent sx={{ flexGrow: 1 }}>
                                 <Typography component="div" variant="h6">
-                                    {genre.name}
+                                    {album.name}
                                 </Typography>
                             </CardContent>
                             <Box display={'flex'} alignItems={'center'} justifyContent={"flex-end"} ml="auto" mx={2}>
@@ -175,7 +204,7 @@ const Genre = () => {
                                     variant="outlined"
                                     color="error"
                                     size='small'
-                                    onClick={() => handleDeleteGenre(genre.id)}
+                                    onClick={() => handleDeleteAlbum(album.id)}
                                 >
                                     <Box style={{ display: "flex", flexDirection: "row", gap: 4, alignItems: "center" }}>
                                         <DeleteIcon />
@@ -190,4 +219,4 @@ const Genre = () => {
     );
 };
 
-export default Genre;
+export default Album;

@@ -63,7 +63,7 @@ const Genre = () => {
             fetchData();
             handleClose();
             Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "success",
                 title: `Genre "${newGenre}" has been created`,
                 showConfirmButton: false,
@@ -136,7 +136,6 @@ const Genre = () => {
                             name="name"
                             placeholder="here..."
                             fullWidth
-                            value={newGenre}
                             onChange={handleInputGenre}
                         />
                     </Box>
