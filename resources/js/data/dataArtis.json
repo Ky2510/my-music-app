@@ -1,0 +1,42 @@
+[
+    {
+      "name": "Sting",
+      "image": "https://upload.wikimedia.org/wikipedia/en/thumb/9/91/Sting-album-cover-sacred-love.jpg/220px-Sting-album-cover-sacred-love.jpg"
+    },
+    {
+      "name": "Oasis",
+      "image": "https://upload.wikimedia.org/wikipedia/en/thumb/f/fd/Oasis_-_Definitely_Maybe_cover.jpg/220px-Oasis_-_Definitely_Maybe_cover.jpg"
+    },
+    {
+      "name": "The Beatles",
+      "image": "https://upload.wikimedia.org/wikipedia/en/thumb/1/16/Rubber_Soul.jpg/220px-Rubber_Soul.jpg"
+    },
+    {
+      "name": "Coldplay",
+      "image": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f8/Coldplay_-_A_Rush_of_Blood_to_the_Head.png/220px-Coldplay_-_A_Rush_of_Blood_to_the_Head.png"
+    },
+    {
+      "name": "Radiohead",
+      "image": "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/Radiohead_-_Kid_A.png/220px-Radiohead_-_Kid_A.png"
+    },
+    {
+      "name": "Queen",
+      "image": "https://upload.wikimedia.org/wikipedia/en/thumb/2/2e/Queen_News_of_the_World.png/220px-Queen_News_of_the_World.png"
+    },
+    {
+      "name": "David Bowie",
+      "image": "https://upload.wikimedia.org/wikipedia/en/thumb/3/36/David_Bowie_-_Blackstar_%28album_cover%29.png/220px-David_Bowie_-_Blackstar_%28album_cover%29.png"
+    },
+    {
+      "name": "Pink Floyd",
+      "image": "https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/Dark_Side_of_the_Moon.png/220px-Dark_Side_of_the_Moon.png"
+    },
+    {
+      "name": "The Rolling Stones",
+      "image": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e5/The_Rolling_Stones_-_Beggars_Banquet.jpg/220px-The_Rolling_Stones_-_Beggars_Banquet.jpg"
+    },
+    {
+      "name": "Led Zeppelin",
+      "image": "https://upload.wikimedia.org/wikipedia/en/thumb/2/29/Led_Zeppelin_-_Led_Zeppelin_IV.jpg/220px-Led_Zeppelin_-_Led_Zeppelin_IV.jpg"
+    }
+]
