@@ -1,11 +1,11 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 
-import Home from '../components/Home'
-import About from '../components/About'
-import Genre from '../components/Genre'
-import Album from '../components/Album'
-import Notfound from '../components/Notfound'
+import Home from '../pages/Home'
+import About from '../pages/About'
+import Genre from '../pages/Genre'
+import Album from '../pages/Album'
+import Notfound from '../pages/Notfound'
 
 const Index = () => {
     return (
