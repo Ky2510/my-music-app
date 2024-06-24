@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\ChoiceMusicController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MusicController;
 use Illuminate\Http\Request;
@@ -41,4 +42,12 @@ Route::prefix('artist')->controller(ArtistController::class)->group(function () 
     Route::get('/find/{id}', 'find')->name('artist.find');
     Route::post('/update/{id}', 'update')->name('artist.update');
     Route::delete('/delete/{id}', 'delete')->name('artist.delete');
+});
+
+Route::prefix('choice-music')->controller(ChoiceMusicController::class)->group(function () {
+    Route::get('/', 'index')->name('choice-music.index');
+    Route::post('/create', 'create')->name('choice-music.create');
+    Route::get('/find/{id}', 'find')->name('choice-music.find');
+    Route::post('/update/{id}', 'update')->name('choice-music.update');
+    Route::delete('/delete/{id}', 'delete')->name('choice-music.delete');
 });
