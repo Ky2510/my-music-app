@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import LayoutIndex from './layouts/LayoutIndex';
+import LayoutIndex from '../components/layouts/LayoutIndex';
 
 const App = () => {
     return (

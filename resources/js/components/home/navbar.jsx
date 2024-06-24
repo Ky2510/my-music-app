@@ -1,64 +1,96 @@
-import React from 'react'
-import { Box, Grid, Typography } from '@material-ui/core'
-import Paper from '@material-ui/core/Paper'
-import { NavLink } from 'react-router-dom'
+import * as React from 'react';
+import { styled, alpha } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
+import ClearIcon from '@mui/icons-material/Clear';
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.black, 0.05),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.black, 0.1),
+  },
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  width: '100%',
+  maxWidth: '400px',
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  color: theme.palette.text.primary,
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  width: '100%',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+  },
+}));
 
 const Navbar = () => {
-    return (
-        <div>
-            <Paper style={{ height: "10vh", position: 'sticky', top: 0, zIndex: 1000, marginLeft: 15 }} >
-                <Grid container>
-                    <Grid item xs={12} sm={6} md={6}>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: 20
-                            }}
-                            mt={2}
-                        >
-                            <NavLink to="/" style={{ textDecoration: 'none' }}>
-                                <Typography variant="h6" color="initial">
-                                    <Box>
-                                        Home
-                                    </Box>
-                                </Typography>
-                            </NavLink>
-                            <NavLink to="/about" style={{ textDecoration: 'none' }}>
-                                <Typography variant="h6" color="initial">
-                                    <Box>
-                                        About
-                                    </Box>
-                                </Typography>
-                            </NavLink>
-                            <NavLink to="/genre" style={{ textDecoration: 'none' }}>
-                                <Typography variant="h6" color="initial">
-                                    <Box>
-                                        Genre
-                                    </Box>
-                                </Typography>
-                            </NavLink>
-                        </Box>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={6}>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'flex-end',
-                                paddingRight: 20,
-                                alignItems: 'center',
-                                height: '57%'
-                            }}
-                            mt={2}
-                        >
-                            Name User
-                        </Box>
-                    </Grid>
-                </Grid>
-            </Paper>
-        </div>
-    )
-}
+  const [searchValue, setSearchValue] = React.useState('');
 
-export default Navbar
+  const handleInputChange = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  const handleClearSearch = () => {
+    setSearchValue('');
+  };
+
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" sx={{ backgroundColor: 'white', boxShadow: 3 }}>
+        <Toolbar>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              value={searchValue}
+              onChange={handleInputChange}
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+            {searchValue && (
+              <IconButton
+                size="small"
+                aria-label="clear search"
+                onClick={handleClearSearch}
+                sx={{
+                  position: 'absolute',
+                  right: 0,
+                  padding: 0,
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <ClearIcon />
+              </IconButton>
+            )}
+          </Search>
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+};
+
+export default Navbar;
