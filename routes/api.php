@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MusicController;
 use Illuminate\Http\Request;
@@ -32,4 +33,12 @@ Route::prefix('music')->controller(MusicController::class)->group(function () {
     Route::get('/find/{id}', 'find')->name('music.find');
     Route::post('/update/{id}', 'update')->name('music.update');
     Route::delete('/delete/{id}', 'delete')->name('music.delete');
+});
+
+Route::prefix('artist')->controller(ArtistController::class)->group(function () {
+    Route::get('/', 'index')->name('artist.index');
+    Route::post('/create', 'create')->name('artist.create');
+    Route::get('/find/{id}', 'find')->name('artist.find');
+    Route::post('/update/{id}', 'update')->name('artist.update');
+    Route::delete('/delete/{id}', 'delete')->name('artist.delete');
 });
