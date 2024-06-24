@@ -21,7 +21,7 @@ class AlbumController extends Controller
     {
         $validate = $request->validate([
             'name' => 'required|string|max:255',
-            'release' => 'nullable|date_format:d-m-Y', 
+            'release' => 'nullable|string', 
             'image' => 'nullable|string',
         ]);
 
