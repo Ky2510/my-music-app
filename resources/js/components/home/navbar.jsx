@@ -58,7 +58,7 @@ const Navbar = () => {
     <Box sx={{ flexGrow: 1 }}>
       
         <Toolbar>
-          <Search sx={{borderRadius:10}}>
+          <Search sx={{borderRadius:10 ,border: '1px solid white',}}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -79,6 +79,7 @@ const Navbar = () => {
                   padding: 0,
                   height: '100%',
                   display: 'flex',
+                  
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
