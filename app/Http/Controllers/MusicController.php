@@ -126,21 +126,6 @@ class MusicController extends Controller
 
     public function musicFindAlbum($albumId)
     {
-        // try {
-        //     $musics = Music::get();
-
-        //     return response()->json([
-        //         'message' => 'Music fetching successfully',
-        //         'choice_musics' => $musics
-        //     ], 200);
-        // } catch (\Exception $e) {
-        //     Log::error('Error fetching music: '.$e->getMessage());
-
-        //     return response()->json([
-        //         'message' => 'An error occurred while fetching music',
-        //         'error' => $e->getMessage()
-        //     ], 500);
-        // }
 
         $choiceMusics = ChoiceMusic::whereHas('music.album', function ($query) use ($albumId) {
             $query->where('id', $albumId);
