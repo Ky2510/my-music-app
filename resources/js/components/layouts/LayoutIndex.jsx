@@ -10,13 +10,12 @@ import Play from '../home/play';
 const LayoutIndex = () => {
     const theme = useTheme();
     return (
-        <div>
+        <div >
             <Grid container>
                 <Grid item xs={12} sm={3} md={2}>
                     <Sidebar />
                 </Grid>
                 <Grid item xs={12} sm={9} md={10}>
-                    <Navbar />
                     <Box mt={2} mb={2}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>

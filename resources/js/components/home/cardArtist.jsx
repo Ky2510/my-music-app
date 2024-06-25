@@ -5,8 +5,10 @@ import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
 
 const CardArtist = ({ artist }) => {
+      
+
   return (
-    <Card sx={{ minHeight: '200px', width: 250, marginBottom: 2 }}>
+    <Card sx={{ minHeight: '200px', width: 200, marginBottom: 2 }}>
       <CardCover>
         <img
           src={artist.image}
@@ -18,11 +20,11 @@ const CardArtist = ({ artist }) => {
       <CardCover
         sx={{
           background:
-            'linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0) 200px), linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 300px)',
+            'linear-gradient(to top, rgba(0,0,0,0.0), rgba(0,0,0,0) 200px), linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0) 300px)',
         }}
       />
-      <CardContent sx={{ position: 'absolute', bottom: 0, width: '100%', color: '#fff' }}>
-        <Typography variant="h6">
+      <CardContent sx={{ position: 'absolute', bottom: 0, width: '100%', color: 'white' }}>
+        <Typography variant="h6" color='red'>
           {artist.name}
         </Typography>
       </CardContent>
