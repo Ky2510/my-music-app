@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Music;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class MusicController extends Controller
 {
@@ -18,8 +20,8 @@ class MusicController extends Controller
                 ],
                 'albumId' => [
                     'name' => $music->album->name ?? 'Unknown Album',
-                    'release' => $music->album->release ?? null,
-                    'image' => $music->album->image ?? null,
+                    'release' => $music->album->release ?? 'Unknown release Album',
+                    'image' => $music->album->image ?? 'Unknown image Album',
                 ],
                 'title' => $music->title,
                 'release' => $music->release,
@@ -37,26 +39,42 @@ class MusicController extends Controller
 
     public function create(Request $request)
     {
-        $validate = $request->validate([
-            'title' => 'required|string|max:255',
-            'release' => 'nullable|string',
-            'linkUrl' => 'required|string',
-            'albumId' => 'required',
-            'genreId' => 'required',
-        ]);
-    
-        $music = Music::create([
-            'title' => $validate['title'], 
-            'release' => $validate['release'],
-            'linkUrl' => $validate['linkUrl'],
-            'genreId' => $validate['genreId'],
-            'albumId' => $validate['albumId'],
-        ]);
-    
-        return response()->json([
-            'message' => 'Music created successfully',
-            'music' => $music
-        ], 201);
+        try {
+            $validate = $request->validate([
+                'title' => 'required|string|max:255',
+                'release' => 'nullable|string',
+                'linkUrl' => 'required|string',
+                'albumId' => 'required',
+                'genreId' => 'required',
+            ]);
+        
+            $music = Music::create([
+                'title' => $validate['title'], 
+                'release' => $validate['release'],
+                'linkUrl' => $validate['linkUrl'],
+                'genreId' => $validate['genreId'],
+                'albumId' => $validate['albumId'],
+            ]);
+        
+            return response()->json([
+                'message' => 'Music created successfully',
+                'music' => $music
+            ], 201);
+        }catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            // Log the exception message
+            Log::error('Error creating choice music: '.$e->getMessage());
+
+            return response()->json([
+                'message' => 'An error occurred while creating the choice music',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+       
     }
     
 
