@@ -34,7 +34,9 @@ Route::prefix('music')->controller(MusicController::class)->group(function () {
     Route::get('/find/{id}', 'find')->name('music.find');
     Route::post('/update/{id}', 'update')->name('music.update');
     Route::delete('/delete/{id}', 'delete')->name('music.delete');
+    Route::get('/album/{albumId}', 'musicFindAlbum')->name('music.albumId');
 });
+
 
 Route::prefix('artist')->controller(ArtistController::class)->group(function () {
     Route::get('/', 'index')->name('artist.index');
