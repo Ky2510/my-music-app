@@ -56,16 +56,16 @@ const Navbar = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: 'white', boxShadow: 3 }}>
+      
         <Toolbar>
-          <Search>
+          <Search sx={{borderRadius:10}}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
               value={searchValue}
               onChange={handleInputChange}
-              placeholder="Search…"
+              placeholder="Searh For song "
               inputProps={{ 'aria-label': 'search' }}
             />
             {searchValue && (
@@ -88,7 +88,7 @@ const Navbar = () => {
             )}
           </Search>
         </Toolbar>
-      </AppBar>
+      
     </Box>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Avatar,
   Box,
@@ -12,26 +12,44 @@ import {
   useMediaQuery,
   useTheme,
   IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
 } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import CategoryIcon from '@mui/icons-material/Category';
 import AlbumIcon from '@mui/icons-material/Album';
-import PersonIcon from '@mui/icons-material/Person'; // Icon for artist
+import PersonIcon from '@mui/icons-material/Person'; 
 import MenuIcon from '@mui/icons-material/Menu';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 const Sidebar = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleLogin = () => {
+    
+    setIsLoggedIn(true);
+    setShowLoginModal(false); 
+  };
+
+  const handleLogout = () => {
+    
+    setIsLoggedIn(false);
+  };
+
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', position: 'fixed', width: '200px' }}>
       {isMobile ? (
         <>
           <IconButton
@@ -100,19 +118,37 @@ const Sidebar = () => {
                 </List>
               </Box>
               <Box pb={2} textAlign="center">
-                <ListItem button onClick={() => console.log("Logout clicked")}>
-                  <ListItemIcon><ExitToAppIcon /></ListItemIcon>
-                  <ListItemText primary="Logout" />
-                </ListItem>
+                {isLoggedIn ? (
+                  <ListItem button onClick={handleLogout}>
+                    <ListItemIcon><ExitToAppIcon /></ListItemIcon>
+                    <ListItemText primary="Logout" />
+                  </ListItem>
+                ) : (
+                  <ListItem button onClick={() => setShowLoginModal(true)}>
+                    <ListItemIcon><ExitToAppIcon /></ListItemIcon>
+                    <ListItemText primary="Login" />
+                  </ListItem>
+                )}
               </Box>
             </Box>
           </Drawer>
+
+          {/* Login Modal */}
+          <Dialog open={showLoginModal} onClose={() => setShowLoginModal(false)}>
+            <DialogTitle>Login</DialogTitle>
+            <DialogContent>
+              <Typography variant="body1">This is where your login form will be.</Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleLogin}>Login</Button>
+            </DialogActions>
+          </Dialog>
         </>
       ) : (
         <Box
           component={Paper}
           sx={{
-            width: 300,
+            width: 250,
             height: '100vh',
             position: 'sticky',
             top: 0,
@@ -123,6 +159,7 @@ const Sidebar = () => {
         >
           <Box
             sx={{
+              width: 200,
               height: '100%',
               display: 'flex',
               flexDirection: 'column',
@@ -165,10 +202,17 @@ const Sidebar = () => {
               </List>
             </Box>
             <Box pb={2} textAlign="center">
-              <ListItem button onClick={() => console.log("Logout clicked")}>
-                <ListItemIcon><ExitToAppIcon /></ListItemIcon>
-                <ListItemText primary="Logout" />
-              </ListItem>
+              {isLoggedIn ? (
+                <ListItem button onClick={handleLogout}>
+                  <ListItemIcon><ExitToAppIcon /></ListItemIcon>
+                  <ListItemText primary="Logout" />
+                </ListItem>
+              ) : (
+                <ListItem button onClick={() => setShowLoginModal(false)}>
+                  <ListItemIcon><ExitToAppIcon /></ListItemIcon>
+                  <ListItemText primary="Login" />
+                </ListItem>
+              )}
             </Box>
           </Box>
         </Box>

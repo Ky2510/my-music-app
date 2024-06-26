@@ -6,6 +6,8 @@ import About from '../pages/About'
 import Genre from '../pages/Genre'
 import Album from '../pages/Album'
 import Notfound from '../pages/Notfound'
+import Login from '../pages/auth/login'
+import Register from '../pages/auth/register'
 
 const Index = () => {
     return (
@@ -15,6 +17,8 @@ const Index = () => {
                 <Route path='/about' element={<About />} />
                 <Route path='/album' element={<Album />} />
                 <Route path='/genre' element={<Genre />} />
+                <Route path='/login' element={<Login/>} />
+                <Route path='/Register' element={<Register/>} />
                 <Route path='/*' element={<Notfound />} />
             </Routes>
         </div >
