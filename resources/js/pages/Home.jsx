@@ -27,6 +27,7 @@ const Home = () => {
   const fetchDataChoiceMusic = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/api/choice-music');
+      console.log(response.data.choice_musics);
       setChoiceMusic(response.data.choice_musics); 
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -42,7 +43,7 @@ const Home = () => {
     dots: true,
     infinite: true,
     speed: 400,
-    slidesToShow: 1,
+    slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 5000,
@@ -61,8 +62,8 @@ const Home = () => {
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: 0.83,
+          slidesToScroll: 2,
           initialSlide: 1,
           initialSlideWidth: 240,
         },
@@ -75,12 +76,12 @@ const Home = () => {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '99%' }}>
       <Navbar />
-      <Typography fontSize={20} fontWeight={'bold'} marginLeft={'2%'}>
+      <Typography fontSize={20} fontWeight={'bold'} marginLeft={'2%'}color={'white'}>
         Billboard Topchart
       </Typography>
-      <Box marginLeft={'2%'} marginTop={2} width={'98%'}>
+      <Box  marginTop={2} marginLeft={"5%"} width={'93%'}>
         <Slider {...settings}>
           {choiceMusic.map((choice_musics, index) => (
             <CardChoiceMusic key={index} choiceMusic={choice_musics} />
