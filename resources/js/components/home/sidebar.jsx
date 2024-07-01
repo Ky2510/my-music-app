@@ -20,6 +20,7 @@ import AlbumIcon from '@mui/icons-material/Album';
 import PersonIcon from '@mui/icons-material/Person'; 
 import MenuIcon from '@mui/icons-material/Menu';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
   const theme = useTheme();
@@ -30,6 +31,9 @@ const Sidebar = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+  };
   const drawerContent = (
     <Box
       sx={{
@@ -77,10 +81,10 @@ const Sidebar = () => {
         </List>
       </Box>
       <Box pb={2} textAlign="center">
-        <ListItem button onClick={() => console.log("Logout clicked")}>
-          <ListItemIcon sx={{ color: 'white' }}><ExitToAppIcon /></ListItemIcon>
-          <ListItemText primary="Logout" sx={{ color: 'white' }} />
-        </ListItem>
+          <ListItem button onClick={handleLogout}>
+              <ListItemIcon sx={{ color: 'white' }}><ExitToAppIcon /></ListItemIcon>
+              <ListItemText primary="Logout" sx={{ color: 'white' }} />
+          </ListItem>
       </Box>
     </Box>
   );

@@ -1,31 +1,23 @@
 import { Box, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import MusicNoteIcon from '@mui/icons-material/MusicNote'; // Import the music icon
+import MusicNoteIcon from '@mui/icons-material/MusicNote'; 
+import { useForm } from 'react-hook-form';
+import axios from "axios";
 
 const Register = () => {
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
-    const [formRegister, setFormRegister] = useState({
-        username: "",
-        email: "",
-        password: "",
-    });
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormRegister({
-            ...formRegister,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const onSubmit = async (data) => {
         try {
-            // await API.post("register", formRegister);
+            const response = await axios.post('http://127.0.0.1:8000/api/auth/register', data);
+            console.log(response.data.register);
+
+            
             navigate("/login");
         } catch (error) {
-            console.log(error);
+            console.error("Error:", error);
         }
     };
 
@@ -37,7 +29,7 @@ const Register = () => {
             height="100vh"
             bgcolor="#191414"
         >
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <Box
                     display="flex"
                     flexDirection="column"
@@ -52,6 +44,24 @@ const Register = () => {
                         Sign up to start listening
                     </Typography>
                     <TextField
+                        {...register("name", { required: true })}
+                        label="Fullname"
+                        type="text"
+                        name="name"
+                        variant="filled"
+                        fullWidth
+                        sx={{
+                            input: { color: 'white' },
+                            label: { color: 'grey' },
+                            backgroundColor: '#333',
+                            borderRadius: 1,
+                            mb: 2,
+                        }}
+                    />
+                    {errors.name && <span>This field is required</span>}
+
+                    <TextField
+                        {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
                         label="Email"
                         type="email"
                         name="email"
@@ -64,26 +74,11 @@ const Register = () => {
                             borderRadius: 1,
                             mb: 2,
                         }}
-                        value={formRegister.email}
-                        onChange={handleChange}
                     />
+                    {errors.email && <span>This field is required and must be a valid email</span>}
+
                     <TextField
-                        label="Username"
-                        type="text"
-                        name="username"
-                        variant="filled"
-                        fullWidth
-                        sx={{
-                            input: { color: 'white' },
-                            label: { color: 'grey' },
-                            backgroundColor: '#333',
-                            borderRadius: 1,
-                            mb: 2,
-                        }}
-                        value={formRegister.username}
-                        onChange={handleChange}
-                    />
-                    <TextField
+                        {...register("password", { required: true, minLength: 8 })}
                         label="Password"
                         type="password"
                         name="password"
@@ -96,9 +91,9 @@ const Register = () => {
                             borderRadius: 1,
                             mb: 2,
                         }}
-                        value={formRegister.password}
-                        onChange={handleChange}
                     />
+                    {errors.password && <span>This field is required and must be at least 8 characters long</span>}
+
                     <button
                         type="submit"
                         style={{

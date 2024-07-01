@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChoiceMusicController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MusicController;
@@ -11,6 +12,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+
+Route::prefix('auth')->controller(AuthController::class)->group(function () {
+    Route::post('/register', 'register')->name('register');
+    Route::post('/login', 'login')->name('login');
+});
+
 
 Route::prefix('genre')->controller(GenreController::class)->group(function () {
     Route::get('/', 'index')->name('genre.index');
