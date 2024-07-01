@@ -7,7 +7,7 @@
   const CardChoiceMusic = ({ choiceMusic }) => {
         
     return (
-      <Card sx={{ minHeight: '200px', width: 200, marginBottom: 2 , }}>
+      <Card sx={{ minHeight: '150px', width: 150 }}>
         <CardCover>
           <img
             src={choiceMusic.musicId.albumId.image}
