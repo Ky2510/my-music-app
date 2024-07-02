@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\ChoiceMusic;
 use App\Models\Music;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -122,4 +123,43 @@ class MusicController extends Controller
             return response()->json(['message' => 'Music not found.'], 404);
         }
     }
+
+    public function musicFindAlbum($albumId)
+    {
+
+        $choiceMusics = ChoiceMusic::whereHas('music.album', function ($query) use ($albumId) {
+            $query->where('id', $albumId);
+        })->with('music.album', 'music.genre', 'artist')->get();
+
+        // Memformat response
+        $formattedMusics = $choiceMusics->map(function ($choiceMusic) {
+            return [
+                'musicId' => [
+                    'title' => $choiceMusic->music->title,
+                    'albumId' => [
+                        'name' => $choiceMusic->music->album->name,
+                        'release' => $choiceMusic->music->album->release,
+                        'image' => $choiceMusic->music->album->image,
+                    ],
+                    'genreId' => [
+                        'name' => $choiceMusic->music->genre->name,
+                    ],
+                    'release' => $choiceMusic->music->release,
+                    'linkUrl' => $choiceMusic->music->linkUrl,
+                    'created_at' => $choiceMusic->music->created_at,
+                    'updated_at' => $choiceMusic->music->updated_at,
+                ],
+                'artistId' => [
+                    'name' => $choiceMusic->artist->name,
+                ],
+            ];
+        });
+
+        return response()->json([
+            'message' => 'Music fetching successfully',
+            'choice_musics' => $formattedMusics,
+        ], 200);
+    }
+    
+
 }

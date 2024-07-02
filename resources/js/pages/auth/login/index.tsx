@@ -2,25 +2,25 @@ import { Box, TextField, Typography } from '@mui/material';
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
-// import { useAppDispatch } from "../../store";
-// import { getProfileAsync, loginAsync } from '../../store/async/auth';
+import axios from 'axios';
 
 const Login: React.FC = () => {
     const navigate = useNavigate();
-    // const dispatch = useAppDispatch();
 
     const [formInput, setFormInput] = useState({
-        username: "",
+        email: "",
         password: "",
     });
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            // const token = (await dispatch(loginAsync(formInput))).payload;
-            // await dispatch(getProfileAsync(token));
-            navigate('/');
+            const response = await axios.post('http://localhost:8000/api/auth/login', formInput);
+            const { token } = response.data;
+            localStorage.setItem('token', token);
+            navigate('/home');
         } catch (error) {
+            console.error(error);
             window.alert("Invalid username or password");
         }
     };
@@ -48,7 +48,7 @@ const Login: React.FC = () => {
                         Log in to Melodify
                     </Typography>
                     <TextField
-                        label="Email or Username"
+                        label="Email"
                         type='text'
                         variant="filled"
                         fullWidth
@@ -59,9 +59,9 @@ const Login: React.FC = () => {
                             borderRadius: 1,
                             mb: 2,
                         }}
-                        value={formInput.username}
+                        value={formInput.email}
                         onChange={(e) =>
-                            setFormInput({ ...formInput, username: e.target.value })
+                            setFormInput({ ...formInput, email: e.target.value })
                         }
                     />
                     <TextField

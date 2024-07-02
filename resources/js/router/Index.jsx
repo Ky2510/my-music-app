@@ -19,8 +19,8 @@ const Index = () => {
                 <Route path='/album' element={<Album />} />
                 <Route path='/music' element={<Music />} />
                 <Route path='/genre' element={<Genre />} />
-                <Route path='/login' element={<Login/>} />
-                <Route path='/Register' element={<Register/>} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/register' element={<Register />} />
                 <Route path='/*' element={<Notfound />} />
             </Routes>
         </div >
