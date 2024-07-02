@@ -45,35 +45,46 @@ class ChoiceMusicController extends Controller
     public function create(Request $request)
     {
         try {
-            $validate = $request->validate([
+            $validated = $request->validate([
                 'artistId' => 'required',
                 'musicId' => 'required',
             ]);
-        
-            $choiceMusic = ChoiceMusic::create([
-                'artistId' => $validate['artistId'], 
-                'musicId' => $validate['musicId'],
+    
+            $existingChoiceMusic = ChoiceMusic::where('artistId', $validated['artistId'])
+                                              ->where('musicId', $validated['musicId'])
+                                              ->first();
+    
+            if ($existingChoiceMusic) {
+                $existingChoiceMusic->delete();
+    
+                return response()->json([
+                    'message' => 'Playlist delete successfully',
+                ], 200); 
+            }
+    
+            ChoiceMusic::create([
+                'artistId' => $validated['artistId'],
+                'musicId' => $validated['musicId'],
             ]);
-        
+    
             return response()->json([
-                'message' => 'Choice music created successfully',
-                'choiceMusic' => $choiceMusic
-            ], 201);
-        }  catch (ValidationException $e) {
+                'message' => 'Playlist add successfully',
+            ], 201); 
+        } catch (ValidationException $e) {
             return response()->json([
                 'message' => 'Validation failed',
                 'errors' => $e->errors()
             ], 422);
         } catch (\Exception $e) {
-            // Log the exception message
-            Log::error('Error creating choice music: '.$e->getMessage());
-
+            Log::error('Error creating or deleting choice music: ' . $e->getMessage());
+    
             return response()->json([
-                'message' => 'An error occurred while creating the choice music',
+                'message' => 'An error occurred while creating or deleting the choice music',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
+    
     
 
     public function find($id)

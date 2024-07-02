@@ -1,35 +1,27 @@
-import * as React from 'react';
-import Card from '@mui/joy/Card';
-import CardCover from '@mui/joy/CardCover';
-import CardContent from '@mui/joy/CardContent';
-import Typography from '@mui/joy/Typography';
+import React from 'react';
+import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
 
-const CardArtist = ({ artist }) => {
-      
-
-  return (
-    <Card sx={{ minHeight: '200px', width: 200, marginBottom: 2 }}>
-      <CardCover>
-        <img
-          src={artist.image}
-          srcSet={`${artist.image}&dpr=2 2x`}
-          loading="lazy"
-          alt=""
-        />
-      </CardCover>
-      <CardCover
-        sx={{
-          background:
-            'linear-gradient(to top, rgba(0,0,0,0.0), rgba(0,0,0,0) 200px), linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0) 300px)',
-        }}
-      />
-      <CardContent sx={{ position: 'absolute', bottom: 0, width: '100%', color: 'white' }}>
-        <Typography variant="h6" color='red'>
-          {artist.name}
-        </Typography>
-      </CardContent>
-    </Card>
-  );
+const ArtistCard = ({ artist }) => {
+    return (
+        <Card sx={{ maxWidth: 345 }}>
+            <CardActionArea>
+                <CardMedia
+                    component="img"
+                    height="140"
+                    image={'default.jpg'}
+                    alt={'test'}
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                        coba
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        test
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+        </Card>
+    );
 }
 
-export default CardArtist;
+export default ArtistCard;

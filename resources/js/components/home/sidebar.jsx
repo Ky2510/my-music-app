@@ -22,17 +22,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useNavigate } from 'react-router-dom';
 
-const Sidebar = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const Sidebar = () => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+    const handleDrawerToggle = () => {
+      setMobileOpen(!mobileOpen);
+    };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
+    const handleLogout = () => {
+      localStorage.removeItem('token');
+      const navigate = useNavigate();
+      navigate('/login');
   };
   const drawerContent = (
     <Box
@@ -70,7 +72,7 @@ const Sidebar = () => {
             <ListItemIcon sx={{ color: 'white' }}><CategoryIcon /></ListItemIcon>
             <ListItemText primary="Genre" sx={{ color: 'white' }} />
           </ListItem>
-          <ListItem button component="a" href="/album-artist">
+          <ListItem button component="a" href="/album">
             <ListItemIcon sx={{ color: 'white' }}><AlbumIcon /></ListItemIcon>
             <ListItemText primary="Album" sx={{ color: 'white' }} />
           </ListItem>
@@ -89,51 +91,51 @@ const Sidebar = () => {
     </Box>
   );
 
-  return (
-    <Box sx={{ display: 'flex' }}>
-      {isMobile ? (
-        <>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ ml: 1 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Drawer
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{
-              keepMounted: true,
-            }}
+    return (
+      <Box sx={{ display: 'flex' }}>
+        {isMobile ? (
+          <>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ ml: 1 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Drawer
+              variant="temporary"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              ModalProps={{
+                keepMounted: true,
+              }}
+              sx={{
+                '& .MuiDrawer-paper': { boxSizing: 'border-box',  },
+              }}
+            >
+              {drawerContent}
+            </Drawer>
+          </>
+        ) : (
+          <Box
+            component={Paper}
             sx={{
-              '& .MuiDrawer-paper': { boxSizing: 'border-box',  },
+              width:229,
+              height: '100vh',
+              position: 'fixed',
+              top: 0,
+              zIndex: 1000,
+              backgroundColor: '#2d2d2d',
+              padding: 2,
             }}
           >
             {drawerContent}
-          </Drawer>
-        </>
-      ) : (
-        <Box
-          component={Paper}
-          sx={{
-            width:229,
-            height: '100vh',
-            position: 'fixed',
-            top: 0,
-            zIndex: 1000,
-            backgroundColor: '#2d2d2d',
-            padding: 2,
-          }}
-        >
-          {drawerContent}
-        </Box>
-      )}
-    </Box>
-  );
-};
+          </Box>
+        )}
+      </Box>
+    );
+  };
 
-export default Sidebar;
+  export default Sidebar;

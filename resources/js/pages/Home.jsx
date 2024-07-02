@@ -3,31 +3,23 @@ import Box from '@mui/material/Box';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import CardArtist from '../components/home/cardArtist';
 import Navbar from '../components/home/navbar';
 import { Typography } from '@mui/material';
+import Youtube from 'react-youtube';
 import axios from 'axios';
-import CardChoiceMusic from '../components/home/cardCohiceMusic';
+// import CardChoiceMusic from '../components/home/cardChoiceMusic';
+// import MusicPlayer from '../components/home/play'; // Updated import
+import CardChoiceMusic from '../components/home/cardCohiceMusic'
+import Play from '../components/home/play'
 
 const Home = () => {
   const [data, setData] = useState([]);
+  const [url, setUrl] = useState("");
   const [choiceMusic, setChoiceMusic] = useState([]);
-  console.log(choiceMusic)
 
-  
-
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await axios.get('http://127.0.0.1:8000/api/artist');
-  //     setData(response.data.artist); 
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //   }
-  // };
   const fetchDataChoiceMusic = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/api/choice-music');
-      console.log(response.data.choice_musics);
       setChoiceMusic(response.data.choice_musics); 
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -35,7 +27,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-      // fetchData();
     fetchDataChoiceMusic();
   }, []);
 
@@ -43,7 +34,7 @@ const Home = () => {
     dots: true,
     infinite: true,
     speed: 400,
-    slidesToShow: 4,
+    slidesToShow: 5,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 5000,
@@ -75,18 +66,32 @@ const Home = () => {
     initialSlideWidth: 240, 
   };
 
+  const song = {
+  "title": "Bob Marley - Sample Song",
+  "artist": "Bob Marley",
+  "imageUrl": "https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png",
+  "mp4Url": "https://www.youtube.com/watch?v=1ti2YCFgCoI"
+
+  };
+
   return (
     <Box sx={{ width: '99%' }}>
-      <Navbar />
-      <Typography fontSize={20} fontWeight={'bold'} marginLeft={'2%'}color={'white'}>
-        Billboard Topchart
-      </Typography>
-      <Box  marginTop={2} marginLeft={"5%"} width={'93%'}>
-        <Slider {...settings}>
-          {choiceMusic.map((choice_musics, index) => (
-            <CardChoiceMusic key={index} choiceMusic={choice_musics} />
-          ))}
-        </Slider>
+      <Box sx={{ marginTop: -2, marginBottom: 0, padding: 0 }}>
+        <Navbar />
+        <Typography fontSize={20} fontWeight={'bold'} marginLeft={'5%'} color={'white'}>
+          Billboard Topchart
+        </Typography>
+        <Box marginTop={2} marginLeft={'5%'} width={'93%'}>
+          <Slider {...settings}>
+            {choiceMusic.map((choice_musics, index) => (
+              <CardChoiceMusic key={index} choiceMusic={choice_musics} />
+            ))}
+          </Slider>
+        </Box>
+        <Box display={'flex'} justifyContent={'end'} mt={"2%"} mr={"2%"}>
+          <Play song={song} />
+        </Box>
+
       </Box>
     </Box>
   );
