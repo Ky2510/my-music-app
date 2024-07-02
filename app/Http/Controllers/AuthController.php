@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -20,6 +20,7 @@ class AuthController extends Controller
 
             $validate["password"] = Hash::make($validate["password"]);
 
+            
             $register = User::create([
                 'name' => $validate['name'],
                 'email' => $validate['email'],
@@ -43,24 +44,31 @@ class AuthController extends Controller
         try {
             $credentials = $request->validate([
                 'email' => 'required|email',
-                'password' => 'required|string'
+                'password' => 'required|string',
             ]);
-    
+
             $user = User::where('email', $credentials['email'])->first();
-    
+
             if (!$user || !Hash::check($credentials['password'], $user->password)) {
                 return response()->json([
                     'message' => 'Unauthorized',
                 ], 401);
             }
-    
-            $token = JWTAuth::fromUser($user);
-    
+
+            $token = JWTAuth::attempt($credentials);
+
+            if (!$token) {
+                return response()->json([
+                    'message' => 'Unauthorized',
+                ], 401);
+            }
+
             return response()->json([
                 'message' => 'Login successful',
                 'user' => $user,
-                'token' => $token 
+                'token' => $token,
             ], 200);
+
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => 'Failed to login',
