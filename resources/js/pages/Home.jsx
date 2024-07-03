@@ -5,22 +5,28 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Navbar from '../components/home/navbar';
 import { Typography } from '@mui/material';
-import Youtube from 'react-youtube';
 import axios from 'axios';
-// import CardChoiceMusic from '../components/home/cardChoiceMusic';
-// import MusicPlayer from '../components/home/play'; // Updated import
-import CardChoiceMusic from '../components/home/cardCohiceMusic'
-import Play from '../components/home/play'
+import CardChoiceMusic from '../components/home/cardCohiceMusic';
+import Play from '../components/home/play';
+import CardMusic from '../components/home/cardMusic';
 
 const Home = () => {
-  const [data, setData] = useState([]);
-  const [url, setUrl] = useState("");
   const [choiceMusic, setChoiceMusic] = useState([]);
+  const [musicData, setMusicData] = useState([]);
 
   const fetchDataChoiceMusic = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/api/choice-music');
       setChoiceMusic(response.data.choice_musics); 
+    } catch (error) {
+      console.error('Error fetching choice music data:', error);
+    }
+  };
+
+  const fetchMusicData = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/api/choice-music');
+      setMusicData(response.data.choice_musics); 
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -28,6 +34,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchDataChoiceMusic();
+    fetchMusicData();
   }, []);
 
   const settings = {
@@ -67,11 +74,10 @@ const Home = () => {
   };
 
   const song = {
-  "title": "Bob Marley - Sample Song",
-  "artist": "Bob Marley",
-  "imageUrl": "https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png",
-  "mp4Url": "https://www.youtube.com/watch?v=1ti2YCFgCoI"
-
+    title: "Sample Song",
+    artist: "Sample Artist",
+    imageUrl: "https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png",
+    mp4Url: "https://www.sample-videos.com/video123/mp4/480/asdasdas.mp4"
   };
 
   return (
@@ -83,15 +89,22 @@ const Home = () => {
         </Typography>
         <Box marginTop={2} marginLeft={'5%'} width={'93%'}>
           <Slider {...settings}>
-            {choiceMusic.map((choice_musics, index) => (
-              <CardChoiceMusic key={index} choiceMusic={choice_musics} />
+            {choiceMusic.map((choiceMusicItem, index) => (
+              <CardChoiceMusic key={index} choiceMusic={choiceMusicItem} />
             ))}
           </Slider>
         </Box>
-        <Box display={'flex'} justifyContent={'end'} mt={"2%"} mr={"2%"}>
+        <Box display={'flex'} justifyContent={'space-between'} mt={"4%"} pl={7}>
+          <Box display={'flex'} flexDirection={'column'} width={'100%'}>
+          {musicData.map((music, index) => (
+          <CardMusic 
+            key={index} 
+            choice_musics={music} 
+          />
+        ))}
+          </Box>
           <Play song={song} />
         </Box>
-
       </Box>
     </Box>
   );

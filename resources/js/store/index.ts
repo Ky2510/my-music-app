@@ -1,21 +1,24 @@
-// import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-// import { useDispatch } from 'react-redux';
-// import genreReducer from '../store/reducers/index';
-// import thunk from 'redux-thunk';
+import { configureStore } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
+// import authReducer from "./slice/auth";
+// import thread from "./slice/thread";
+// import follow from "./slice/follow";
+// import { followSlice } from "./slice/follow";
 
-// const store = configureStore({
-//   reducer: {
-//     genre: genreReducer,
-//   },
-//   middleware: (getDefaultMiddleware) =>
-//     getDefaultMiddleware({
-//       serializableCheck: false, // Disable serializable check if needed
-//     }).concat(thunk),
-// });
+export const store = configureStore({
+    reducer: {
+        // auth: authReducer,
+        // thread: thread,
+        // follow: follow,
+    },
+});
 
-// export type RootState = ReturnType<typeof store.getState>;
-// export type AppDispatch = typeof store.dispatch;
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>;
 
-// export const useAppDispatch = () => useDispatch<AppDispatch>();
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+type AppDispatch = typeof store.dispatch;
 
-// export default store;
+// Use throughout your app instead of plain `useDispatch` and `useSelector`
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
+export const useAppSelector = useSelector.withTypes<RootState>();

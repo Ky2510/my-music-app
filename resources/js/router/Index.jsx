@@ -9,6 +9,7 @@ import Notfound from '../pages/Notfound'
 import Login from '../pages/auth/login'
 import Register from '../pages/auth/register'
 import Music from '../pages/music'
+import AddPlaylist from '../pages/addPlaylist'
 
 const Index = () => {
     return (
@@ -19,6 +20,7 @@ const Index = () => {
                 <Route path='/album' element={<Album />} />
                 <Route path='/music' element={<Music />} />
                 <Route path='/genre' element={<Genre />} />
+                <Route path='add-playlist' element={<AddPlaylist/>} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/*' element={<Notfound />} />

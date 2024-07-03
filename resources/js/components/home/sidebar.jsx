@@ -18,26 +18,27 @@ import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import CategoryIcon from '@mui/icons-material/Category';
 import AlbumIcon from '@mui/icons-material/Album';
 import PersonIcon from '@mui/icons-material/Person'; 
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import MenuIcon from '@mui/icons-material/Menu';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useNavigate } from 'react-router-dom';
 
-  const Sidebar = () => {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const [mobileOpen, setMobileOpen] = React.useState(false);
+const Sidebar = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
-    const handleDrawerToggle = () => {
-      setMobileOpen(!mobileOpen);
-    };
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
   };
+
   const drawerContent = (
     <Box
       sx={{
-        
         height: '100%',
         backgroundColor: '#2d2d2d',
         display: 'flex',
@@ -78,62 +79,66 @@ import { useNavigate } from 'react-router-dom';
             <ListItemIcon sx={{ color: 'white' }}><PersonIcon /></ListItemIcon>
             <ListItemText primary="Artist" sx={{ color: 'white' }} />
           </ListItem>
+          <ListItem button component="a" href="/add-playlist">
+            <ListItemIcon sx={{ color: 'white' }}><PlaylistAddIcon /></ListItemIcon>
+            <ListItemText primary="Add Playlist" sx={{ color: 'white' }} />
+          </ListItem>
         </List>
       </Box>
       <Box pb={2} textAlign="center">
-          <ListItem button onClick={handleLogout}>
-              <ListItemIcon sx={{ color: 'white' }}><ExitToAppIcon /></ListItemIcon>
-              <ListItemText primary="Logout" sx={{ color: 'white' }} />
-          </ListItem>
+        <ListItem button onClick={handleLogout}>
+          <ListItemIcon sx={{ color: 'white' }}><ExitToAppIcon /></ListItemIcon>
+          <ListItemText primary="Logout" sx={{ color: 'white' }} />
+        </ListItem>
       </Box>
     </Box>
   );
 
-    return (
-      <Box sx={{ display: 'flex' }}>
-        {isMobile ? (
-          <>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ ml: 1 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Drawer
-              variant="temporary"
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-              ModalProps={{
-                keepMounted: true,
-              }}
-              sx={{
-                '& .MuiDrawer-paper': { boxSizing: 'border-box',  },
-              }}
-            >
-              {drawerContent}
-            </Drawer>
-          </>
-        ) : (
-          <Box
-            component={Paper}
+  return (
+    <Box sx={{ display: 'flex' }}>
+      {isMobile ? (
+        <>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ ml: 1 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Drawer
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true,
+            }}
             sx={{
-              width:229,
-              height: '100vh',
-              position: 'fixed',
-              top: 0,
-              zIndex: 1000,
-              backgroundColor: '#2d2d2d',
-              padding: 2,
+              '& .MuiDrawer-paper': { boxSizing: 'border-box' },
             }}
           >
             {drawerContent}
-          </Box>
-        )}
-      </Box>
-    );
-  };
+          </Drawer>
+        </>
+      ) : (
+        <Box
+          component={Paper}
+          sx={{
+            width: 229,
+            height: '100vh',
+            position: 'fixed',
+            top: 0,
+            zIndex: 1000,
+            backgroundColor: '#2d2d2d',
+            padding: 2,
+          }}
+        >
+          {drawerContent}
+        </Box>
+      )}
+    </Box>
+  );
+};
 
-  export default Sidebar;
+export default Sidebar;

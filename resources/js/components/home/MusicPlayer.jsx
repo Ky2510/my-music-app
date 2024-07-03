@@ -12,7 +12,7 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import ReactPlayer from "react-player";
 
-const MusicPlayer = ({ song }) => {
+export const MusicPlayer = ({ song }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(0.8);
 
@@ -27,7 +27,6 @@ const MusicPlayer = ({ song }) => {
             sx={{
                 width: "35%",
                 marginBottom: 2,
-                height: "300px",
                 borderRadius: 3,
                 boxShadow: 3,
                 transition: "transform 0.15s ease-in-out",
@@ -60,14 +59,14 @@ const MusicPlayer = ({ song }) => {
                 <Typography
                     variant="body2"
                     color="text.secondary"
-                    
+                    sx={{ marginBottom: 1 }}
                 >
                     {song.artist}
                 </Typography>
                 <Box display="flex" alignItems="center">
                     <IconButton
                         onClick={togglePlay}
-                        sx={{ color: "#1DB954" }}
+                        sx={{ color: "#1DB954", padding: 1 }}
                     >
                         {isPlaying ? (
                             <PauseIcon fontSize="large" />
@@ -90,7 +89,7 @@ const MusicPlayer = ({ song }) => {
                         }}
                     />
                 </Box>
-                <Box >
+                <Box sx={{ marginTop: 2 }}>
                     <Typography
                         variant="body2"
                         color="text.secondary"
@@ -112,5 +111,3 @@ const MusicPlayer = ({ song }) => {
         </Card>
     );
 };
-
-export default MusicPlayer;

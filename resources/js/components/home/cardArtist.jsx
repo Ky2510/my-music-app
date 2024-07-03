@@ -1,5 +1,11 @@
-import React from 'react';
-import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
+import React from "react";
+import {
+    Card,
+    CardActionArea,
+    CardContent,
+    CardMedia,
+    Typography,
+} from "@mui/material";
 
 const ArtistCard = ({ artist }) => {
     return (
@@ -8,8 +14,8 @@ const ArtistCard = ({ artist }) => {
                 <CardMedia
                     component="img"
                     height="140"
-                    image={'default.jpg'}
-                    alt={'test'}
+                    image={"default.jpg"}
+                    alt={"test"}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
@@ -22,6 +28,6 @@ const ArtistCard = ({ artist }) => {
             </CardActionArea>
         </Card>
     );
-}
+};
 
 export default ArtistCard;

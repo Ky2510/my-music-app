@@ -17,6 +17,7 @@ class GenreController extends Controller
             'message' => 'Genre fetching successfully',
             'genre' => $genres
         ], 201);
+        
     }
 
     public function create(Request $request)
