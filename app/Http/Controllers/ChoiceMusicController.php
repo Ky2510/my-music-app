@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\ChoiceMusic;
+use App\Models\Playlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -45,26 +46,20 @@ class ChoiceMusicController extends Controller
     public function create(Request $request)
     {
         try {
-            $validated = $request->validate([
-                'artistId' => 'required',
-                'musicId' => 'required',
-            ]);
-    
-            $existingChoiceMusic = ChoiceMusic::where('artistId', $validated['artistId'])
-                                              ->where('musicId', $validated['musicId'])
+            $existingChoiceMusic = Playlist::where('artistId', $request->input('artistId'))
+                                              ->where('musicId', $request->input('musicId'))
                                               ->first();
     
             if ($existingChoiceMusic) {
                 $existingChoiceMusic->delete();
-    
                 return response()->json([
                     'message' => 'Playlist delete successfully',
                 ], 200); 
             }
     
-            ChoiceMusic::create([
-                'artistId' => $validated['artistId'],
-                'musicId' => $validated['musicId'],
+            Playlist::create([
+                'artistId' => $request->input('artistId'),
+                'musicId' => $request->input('musicId'),
             ]);
     
             return response()->json([
@@ -84,8 +79,6 @@ class ChoiceMusicController extends Controller
             ], 500);
         }
     }
-    
-    
 
     public function find($id)
     {

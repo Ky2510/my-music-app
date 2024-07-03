@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('playlists', function (Blueprint $table) {
+        Schema::create('playlist', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('artistId');
+            $table->unsignedBigInteger('musicId');
             $table->timestamps();
+
+            $table->foreign('artistId')->on("artists")->references('id');
+            $table->foreign('musicId')->on("music")->references('id');
         });
     }
 

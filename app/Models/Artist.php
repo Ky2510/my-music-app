@@ -17,4 +17,9 @@ class Artist extends Model
     {
         return $this->hasMany(ChoiceMusic::class, 'artistId', 'id');
     }
+    
+    public function playlist(): HasMany
+    {
+        return $this->hasMany(Playlist::class, 'artistId', 'id');
+    }
 }

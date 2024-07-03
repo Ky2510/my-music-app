@@ -55,6 +55,7 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
 
     Route::prefix('choice-music')->middleware('auth:api')->controller(ChoiceMusicController::class)->group(function () {
         Route::get('/', 'index')->name('choice-music.index');
+        Route::post('/playlist', 'playlist')->name('choice-music.playlist');
         Route::post('/create', 'create')->name('choice-music.create');
         Route::get('/find/{id}', 'find')->name('choice-music.find');
         Route::post('/update/{id}', 'update')->name('choice-music.update');
