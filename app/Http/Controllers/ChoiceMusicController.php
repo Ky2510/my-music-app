@@ -43,6 +43,40 @@ class ChoiceMusicController extends Controller
         ], 201);
     }
 
+    public function getPlaylist()
+    {
+        $choiceMusics = Playlist::with(['music', 'artist'])->get();
+        $response = $choiceMusics->map(function ($choiceMusic){
+            return [
+                'musicId' => [
+                    'title' => $choiceMusic->music->title ?? 'Unknown Music',
+                    'albumId' => [
+                        'name' => $choiceMusic->music->album->name ?? 'Unknown Album',
+                        'release' => $choiceMusic->music->album->release ?? 'Unknown release Album',
+                        'image' => $choiceMusic->music->album->image ?? 'Unknown image Album',
+                    ],
+                    'genreId' => [
+                        'name' => $choiceMusic->music->genre->name ?? 'Unknown Genre Name',
+                    ],
+                    'release' => $choiceMusic->music->release,
+                    'linkUrl' => $choiceMusic->music->linkUrl,
+                    'created_at' => $choiceMusic->music->created_at,
+                    'updated_at' => $choiceMusic->music->updated_at,
+                ],
+                'artistId' => [
+                    'name' => $choiceMusic->artist->name ?? 'Unknown Artist'
+                ],
+            ];
+        });
+
+        return response()->json([
+            'message' => 'Music fetching successfully',
+            'choice_musics' => $response
+        ], 201);
+    }
+
+    
+
     public function create(Request $request)
     {
         try {
